@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import nobodyCanQuit.web.model.address.FxxxKMAcoord;
@@ -13,15 +14,16 @@ import nobodyCanQuit.web.model.address.FxxxKMAcoord;
 @Component
 public class VilageFcstInfoService {
 
-	private String Apiaddress;
+	@Value("${serviceKey.forecast}")
+	private String serviceKey;
 
 	public URL getApiUrl(FxxxKMAcoord fxxxKMAcoord) throws IOException {
 
-		Apiaddress = "http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst"
-				+ "?serviceKey=zGuDv3a%2FY%2FxXtJPaZ4x2I09BsyEbbwzdzoZ5xxO6VSba6r%2BrvDH7bOkuE3R0c5oe3hdHkLdeoFAdD6oPk48cxw%3D%3D"
+		String api = "http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst"
+				+ "?serviceKey=" + serviceKey
 				+ "&dataType=json&numOfRows=999&pageNo=1" + "&base_date=" + getDate() + "&base_time=" + getTime()
 				+ "&nx=" + fxxxKMAcoord.getX() + "&ny=" + fxxxKMAcoord.getY();
-		return new URL(Apiaddress);
+		return new URL(api);
 	}
 	
 	public String getDate() {

@@ -6,20 +6,20 @@ import java.net.URLEncoder;
 import java.util.List;
 
 import lombok.Setter;
-import nobodyCanQuit.config.auth.ApiAuthKeys;
 import nobodyCanQuit.service.ApiUrlProvider;
 import nobodyCanQuit.service.address.CityListService;
 import nobodyCanQuit.web.model.address.AddressInputCommand;
 import nobodyCanQuit.web.model.dust.DustArea;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DustAreaAddrService implements ApiUrlProvider {
 
-	@Autowired
-	private ApiAuthKeys apiAuthKeys;
+	@Value("${serviceKey.dust}")
+	private String serviceKey;
 	@Autowired
 	private CityListService cityListService;
 	@Setter
@@ -32,7 +32,6 @@ public class DustAreaAddrService implements ApiUrlProvider {
 		final String numOfRows = "30";
 		final String pageNo = "1";
 		final String searchCondition = "DAILY";
-		final String serviceKey = apiAuthKeys.getDUST_API_SERVICE_KEY();
 		String chosenCity = cityListService.getShortName(addressInputCommand.getCity());
 		String encodeAddress = URLEncoder.encode(chosenCity,"utf-8");
 

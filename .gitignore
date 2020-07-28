@@ -5,3 +5,4 @@
 /.settings/
 /.idea/
 /src/main/webapp/WEB-INF/view/test/
+/src/main/resources/auth/

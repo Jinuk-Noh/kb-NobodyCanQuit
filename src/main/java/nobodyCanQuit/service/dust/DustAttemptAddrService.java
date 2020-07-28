@@ -7,24 +7,26 @@ import java.util.List;
 
 import nobodyCanQuit.web.model.dust.DustCityGrade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import nobodyCanQuit.config.auth.ApiAuthKeys;
 import nobodyCanQuit.web.model.dust.DustAttempt;
 import nobodyCanQuit.web.model.dust.DustAttemptAddr;
 
+/*
+ * 지역별 미세먼지 평균치 조회
+ */
 @Component
 public class DustAttemptAddrService{
-	//지역별 미세먼지 평균 조회
-	@Autowired
-	private ApiAuthKeys apiAuthKeys;
+
+	@Value("${serviceKey.dust}")
+	private String serviceKey;
 	private static final String FinedustArea_Abbr =
 			"http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnMesureLIst?";
 	@Autowired
 	private DustAreaAddrService dustAreaAddrService;
 
     public URL getApiUrl(DustItemCodes itemCodes) throws IOException {
-		String serviceKey = apiAuthKeys.getDUST_API_SERVICE_KEY();
 		String numOfRows = "1";
 		String pageNo = "1";
 		String dataGubun = "HOUR";//시간평균 : HOUR, 일평균 : DAILY
